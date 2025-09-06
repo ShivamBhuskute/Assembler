@@ -10,4 +10,6 @@ typedef struct {
 
 ParsedLine *parse_line(const char *line);
 
+void free_parsed_line(ParsedLine *pl);
+
 #endif

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <parser/parser.h>
 
-ParsedLine parse_line(const char *line)
+ParsedLine *parse_line(const char *line)
 {
     ParsedLine *pl = malloc(sizeof(ParsedLine));
     pl->label = NULL;
@@ -12,7 +12,7 @@ ParsedLine parse_line(const char *line)
     pl->operand_count = 0;
 
     char *copy = strdup(line);
-    char *token = strtok(copy, '\t\n');
+    char *token = strtok(copy, " \t\n"); // when i did not add space before \t, it gave NULL to labels
 
     if (!token)
         return pl;
@@ -43,4 +43,15 @@ ParsedLine parse_line(const char *line)
 
     free(copy);
     return pl;
+}
+
+void free_parsed_line(ParsedLine *pl) {
+    if (!pl) return;
+    free(pl->label);
+    free(pl->mnemonic);
+    for (int i = 0; i < pl->operand_count; i++) {
+        free(pl->operands[i]);
+    }
+    free(pl->operands);
+    free(pl);
 }
