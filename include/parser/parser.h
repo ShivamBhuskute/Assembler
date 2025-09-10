@@ -3,6 +3,7 @@
 
 typedef struct {
     char *label;
+    char *comment;
     char *mnemonic;
     char **operands;
     int operand_count;
