@@ -1,14 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <utils/instruction_size.h>
 
 #include "parser/parser.h"
 #include "symbol_table/symbol_table.h"
-
-int get_instruction_size(ParsedLine *pl) {
-    if (!pl->mnemonic) return 0;
-    return 4;
-}
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
