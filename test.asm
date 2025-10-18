@@ -1,11 +1,11 @@
 _start:  
-    mov eax, 5        ; 6 bytes  
-    add eax, 1        ; 3 bytes  
+    mov ax, 5
+    add ax, 1
 next:  
-    mov ebx, eax      ; 2 bytes  
-    sub eax, ebx      ; 2 bytes  
+    mov bx, ax
+    sub ax, bx  
 loop:  
-    mov ecx, 10       ; 6 bytes  
-    dec ecx           ; 2 bytes  
+    mov cx, 10 
+    dec cx
     jmp loop          
-done:  
+done:
