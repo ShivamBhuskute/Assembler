@@ -2,6 +2,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
+char* trim_whitespace(char* str) {
+    if (str == NULL) return NULL;
+    
+    while (isspace((unsigned char)*str)) {
+        str++;
+    }
+    
+    if (*str == '\0') {
+        return str;
+    }
+    
+    char* end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char)*end)) {
+        *end = '\0';
+        end--;
+    }
+    
+    return str;
+}
 
 ParsedLine *parse_line(const char *line) {
     ParsedLine *pl = malloc(sizeof(ParsedLine));
@@ -25,23 +46,23 @@ ParsedLine *parse_line(const char *line) {
         token = strtok(NULL, " \t\n");
     }
 
+
+
     if (token) {
-        printf("TOKEN: %s\n", token);
+        // printf("TOKEN: %s\n", token);
         pl->mnemonic = strdup(token);
-        // printf("MNEMONIC: %s\n", pl->mnemonic);
 
         char *operand_str = strtok(NULL, "\n");
-        printf("OP %s\n", operand_str);
+        // printf("OP %s\n", operand_str);
         if (operand_str) {
             char *op = strtok(operand_str, ",");
 
-            printf("OPINWHILE: %s\n", op);
             while (op) {
+                op = trim_whitespace(op);
                 pl->operands = realloc(
                     pl->operands, sizeof(char *) * (pl->operand_count + 1));
                 pl->operands[pl->operand_count++] = strdup(op);
                 op = strtok(NULL, ",");
-                printf("OPINWHILE: %s\n", op);
             }
         }
     }
