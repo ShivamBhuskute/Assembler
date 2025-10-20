@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Iinclude
 
 SRC_DIR = src
 OBJ_DIR = build
-BIN = assembler
+BIN = $(OBJ_DIR)/assembler
 
 # find all .c files recursively in src/
 SRC = $(shell find $(SRC_DIR) -name "*.c")

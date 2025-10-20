@@ -5,7 +5,7 @@
 
 #include "parser/parser.h"
 
-typedef enum { OP_NONE, OP_ACC, OP_REG, OP_IMM, OP_MEM, OP_LABEL } OperandType;
+typedef enum { OP_NONE = 0, OP_ACC, OP_REG, OP_IMM, OP_MEM, OP_LABEL } OperandType;
 
 typedef struct {
     OperandType type;
