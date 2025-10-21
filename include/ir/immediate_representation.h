@@ -5,23 +5,23 @@
 #include <utils/instruction_size.h>
 
 typedef struct {
-    OperandType type;
-    union {
-        int reg;
-        int imm_16;
-        Symbol* sym_ptr;
-    } value;
-} ParsedOperand;
+    int line_number;
+    char* label;
+    char* mnemonic;
+    char** operands;
+    int operand_count;
+    int address; // i.e. LC value which im calculating in main file
+    int size;
+} InstructionIR;
 
 typedef struct {
-    const OpcodeEntry* opcode;
-    int instruction_size;
-    ParsedOperand operands[2];
-} IR;
+    InstructionIR* instructions;
+    int count;
+    int capacity;
+} IRList;
 
-void init_ir(IR* ir);
-void free_ir(IR* ir);
-
-int add_ir(IR* ir, ParsedOperand* operands, const OpcodeEntry* opcode, int address);
+void init_IRList(IRList* ir_list);
+void free_IRList(IRList* ir_list);
+void add_entry_IR(IRList* ir_list, int line_number, const char* label, const char* mnemonic, char** operands, int operand_count, int address);
 
 #endif
