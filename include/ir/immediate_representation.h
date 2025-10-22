@@ -21,7 +21,7 @@ typedef struct {
 } IRList;
 
 void init_IRList(IRList* ir_list);
+int add_entry_IR(IRList* ir_list, int line_number, const char* label, const char* mnemonic, char** operands, int operand_count, int address);
 void free_IRList(IRList* ir_list);
-void add_entry_IR(IRList* ir_list, int line_number, const char* label, const char* mnemonic, char** operands, int operand_count, int address);
 
 #endif
