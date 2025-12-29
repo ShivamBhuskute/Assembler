@@ -1,7 +1,10 @@
 #include "ir/immediate_representation.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 void init_IRList(IRList* ir_list) {
-    IRList* ir_list = malloc(sizeof(IRList));
     ir_list->count = 0;
     ir_list->capacity = 4;
     ir_list->instructions = malloc(sizeof(InstructionIR) * ir_list->capacity);
@@ -11,21 +14,58 @@ void init_IRList(IRList* ir_list) {
     }
 }
 
-int add_entry_IR(IRList* ir_list, int line_number, const char* label,
-                 const char* mnemonic, char** opernds, int operand_count,
-                 int address) {
-    ;
+int add_entry_IR(IRList* ir_list, const char* label,
+                 const char* mnemonic, char** operands,
+                 int operand_count, int address) {
+
+    if (ir_list->count >= ir_list->capacity) {
+        ir_list->capacity *= 2;
+        ir_list->instructions =
+            realloc(ir_list->instructions,
+                    sizeof(InstructionIR) * ir_list->capacity);
+    }
+
+    InstructionIR* instr = &ir_list->instructions[ir_list->count];
+
+    instr->label = NULL;
+    instr->mnemonic = NULL;
+    instr->operands = NULL;
+    instr->operand_count = 0;
+    instr->address = address;
+
+    if (label) {
+        instr->label = strdup(label);
+    }
+
+    if (mnemonic) {
+        printf("SAVING MNEMONIC: %s\n", mnemonic);
+        instr->mnemonic = strdup(mnemonic);
+    }
+
+    if (operand_count > 0 && operands) {
+        instr->operands = malloc(sizeof(char*) * operand_count);
+        instr->operand_count = operand_count;
+        for (int i = 0; i < operand_count; i++) {
+            instr->operands[i] = strdup(operands[i]);
+        }
+    }
+
+    ir_list->count++;
+    return 0;
 }
 
 void free_IRList(IRList* ir_list) {
     for (int i = 0; i < ir_list->count; i++) {
-        free(ir_list->instructions[i].label);
-        free(ir_list->instructions[i].mnemonic);
+        if (ir_list->instructions[i].label)
+            free(ir_list->instructions[i].label);
+
+        if (ir_list->instructions[i].mnemonic)
+            free(ir_list->instructions[i].mnemonic);
+
         for (int j = 0; j < ir_list->instructions[i].operand_count; j++) {
             free(ir_list->instructions[i].operands[j]);
         }
         free(ir_list->instructions[i].operands);
     }
     free(ir_list->instructions);
-    free(ir_list);
 }
