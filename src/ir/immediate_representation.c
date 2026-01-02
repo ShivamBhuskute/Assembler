@@ -14,15 +14,12 @@ void init_IRList(IRList* ir_list) {
     }
 }
 
-int add_entry_IR(IRList* ir_list, const char* label,
-                 const char* mnemonic, char** operands,
-                 int operand_count, int address) {
-
+int add_entry_IR(IRList* ir_list, const char* label, const char* mnemonic,
+                 char** operands, int operand_count, int address, int size) {
     if (ir_list->count >= ir_list->capacity) {
         ir_list->capacity *= 2;
-        ir_list->instructions =
-            realloc(ir_list->instructions,
-                    sizeof(InstructionIR) * ir_list->capacity);
+        ir_list->instructions = realloc(
+            ir_list->instructions, sizeof(InstructionIR) * ir_list->capacity);
     }
 
     InstructionIR* instr = &ir_list->instructions[ir_list->count];
@@ -32,6 +29,7 @@ int add_entry_IR(IRList* ir_list, const char* label,
     instr->operands = NULL;
     instr->operand_count = 0;
     instr->address = address;
+    instr->size = 0;
 
     if (label) {
         instr->label = strdup(label);
@@ -40,6 +38,7 @@ int add_entry_IR(IRList* ir_list, const char* label,
     if (mnemonic) {
         printf("SAVING MNEMONIC: %s\n", mnemonic);
         instr->mnemonic = strdup(mnemonic);
+        instr->size = size;
     }
 
     if (operand_count > 0 && operands) {
