@@ -24,5 +24,6 @@ typedef struct {
 extern OpcodeEntry op_table[];
 
 int get_instruction_size(ParsedLine *pl);
+OpcodeEntry *find_matching_opcode(ParsedLine *pl);
 
 #endif

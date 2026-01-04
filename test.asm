@@ -1,11 +1,11 @@
-_start:  
-    mov ax, 5
-    add ax, 1
-next:  
-    mov bx, ax
-    sub ax, bx  
-loop:  
-    mov cx, 10 
-    dec cx
-    jmp loop          
-done:
+start:
+    mov ax, 0          
+    mov [0x200], ax    
+    mov cx, 5          
+
+loop:
+    mov ax, [0x200h]    
+    add ax, 1          
+    mov [0200h], ax    
+    dec cx             
+    jmp loop           
