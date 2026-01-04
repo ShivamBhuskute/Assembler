@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 
         if (pl->label) {
             add_symbol(&table, pl->label, LC);
-            add_entry_IR(&ir_list, pl->label, NULL, NULL, 0, LC);
+            add_entry_IR(&ir_list, pl->label, NULL, NULL, 0, LC, 0);
         }
 
         if (pl->mnemonic) {
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 
             add_entry_IR(&ir_list,
                          pl->label,  // if label exists, store it    once
-                         pl->mnemonic, pl->operands, pl->operand_count, LC);
+                         pl->mnemonic, pl->operands, pl->operand_count, LC, size);
 
             LC += size;  // updating LC only on an actual instruction
         }
@@ -71,6 +71,9 @@ int main(int argc, char* argv[]) {
 
         if (ir_list.instructions[i].mnemonic)
             printf("\t%s ", ir_list.instructions[i].mnemonic);
+
+        if (ir_list.instructions[i].size)
+            printf("\t%d ", ir_list.instructions[i].size);
 
         for (int j = 0; j < ir_list.instructions[i].operand_count; j++) {
             printf("%s", ir_list.instructions[i].operands[j]);
