@@ -12,6 +12,7 @@ typedef struct {
     int operand_count;
     int address; // i.e. LC value which i'm calculating in main file
     int size;
+    uint16_t matched_opcode;
 } InstructionIR;
 
 typedef struct {
@@ -21,7 +22,7 @@ typedef struct {
 } IRList;
 
 void init_IRList(IRList* ir_list);
-int add_entry_IR(IRList* ir_list, const char* label, const char* mnemonic, char** operands, int operand_count, int address, int size);
+int add_entry_IR(IRList* ir_list, const char* label, const char* mnemonic, char** operands, int operand_count, int address, int size, uint16_t matched_opcode);
 void free_IRList(IRList* ir_list);
 
 #endif
