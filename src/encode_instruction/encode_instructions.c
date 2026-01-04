@@ -162,7 +162,7 @@ unsigned char* encode_instruction(InstructionIR* ir, SymbolTable* table,
             bytes[2] = (immediate >> 8) & 0xFF;
             *out_size = 3;
             return bytes;
-        }
+        }//
         if (is_register(op1) && is_immediate(op2)) {
             bytes[byte_index++] = opcode;
             int immediate = parse_immediate(op2, table);
