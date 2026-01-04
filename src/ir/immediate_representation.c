@@ -15,7 +15,7 @@ void init_IRList(IRList* ir_list) {
 }
 
 int add_entry_IR(IRList* ir_list, const char* label, const char* mnemonic,
-                 char** operands, int operand_count, int address, int size) {
+                 char** operands, int operand_count, int address, int size, uint16_t matched_opcode) {
     if (ir_list->count >= ir_list->capacity) {
         ir_list->capacity *= 2;
         ir_list->instructions = realloc(
@@ -39,6 +39,7 @@ int add_entry_IR(IRList* ir_list, const char* label, const char* mnemonic,
         printf("SAVING MNEMONIC: %s\n", mnemonic);
         instr->mnemonic = strdup(mnemonic);
         instr->size = size;
+        instr->matched_opcode = matched_opcode;
     }
 
     if (operand_count > 0 && operands) {
